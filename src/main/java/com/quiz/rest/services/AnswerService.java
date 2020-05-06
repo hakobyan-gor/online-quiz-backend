@@ -11,6 +11,10 @@ public interface AnswerService {
 
     public ResponseModel<Answer> createAnswer(Answer answer);
 
+    List<Long> getCorrectAnswersIDsByQuestionId(Long quizId);
+
+    List<Answer> getCorrectAnswersByQuestionId(Long questionId);
+
     public ResponseModel<Answer> getAnswerById(Long id);
 
     public ResponseModel<List<Answer>> getAnswersByQuestionId(Long questionId);

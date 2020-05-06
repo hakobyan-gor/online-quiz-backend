@@ -61,6 +61,16 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
+    public List<Long> getCorrectAnswersIDsByQuestionId(Long questionId) {
+        return answerRepository.findCorrectAnswerIDByQuestionId(questionId);
+    }
+
+    @Override
+    public List<Answer> getCorrectAnswersByQuestionId(Long questionId) {
+        return answerRepository.findCorrectAnswersByQuestionId(questionId);
+    }
+
+    @Override
     public ResponseModel<List<Answer>> getAnswersByQuestionId(Long questionId) {
         List<Answer> answerList = answerRepository.findAnswerByQuestionId(questionId);
         ResponseModel<List<Answer>> responseModel = new ResponseModel<>();

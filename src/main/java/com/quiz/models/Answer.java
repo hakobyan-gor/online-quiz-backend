@@ -10,7 +10,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @EqualsAndHashCode
 @Entity
 @Table(name = "ANSWER")
@@ -38,4 +37,14 @@ public class Answer {
     @JsonIgnore
     private Question theQuestion;
 
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "id=" + id +
+                ", questionId=" + questionId +
+                ", answer='" + answer + '\'' +
+                ", score=" + score +
+                ", answerStatus=" + answerStatus +
+                '}';
+    }
 }

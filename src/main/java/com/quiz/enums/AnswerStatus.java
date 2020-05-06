@@ -9,8 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public enum  AnswerStatus {
 
-    TRUE(1),
-    FALSE(2);
+    TRUE(0),
+    FALSE(1);
 
     @Getter
     @Setter

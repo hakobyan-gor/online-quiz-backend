@@ -10,7 +10,6 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @EqualsAndHashCode
 @Entity
 @Table(name = "QUESTION")
@@ -33,4 +32,14 @@ public class Question {
 
     @OneToMany(mappedBy = "theQuestion")
     private List<Answer> answerList;
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", quizId=" + quizId +
+                ", question='" + question + '\'' +
+                ", answerList=" + answerList +
+                '}';
+    }
 }
