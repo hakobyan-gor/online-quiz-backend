@@ -1,10 +1,9 @@
 package com.quiz.rest.services.impl;
 
-import com.quiz.models.Question;
-import com.quiz.models.Quiz;
-import com.quiz.models.QuizCategory;
+import com.quiz.models.*;
 import com.quiz.models.response.ResponseModel;
 import com.quiz.rest.repositories.QuizRepository;
+import com.quiz.rest.services.AnswerService;
 import com.quiz.rest.services.QuizCategoryService;
 import com.quiz.rest.services.QuestionService;
 import com.quiz.rest.services.QuizService;
@@ -12,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class QuizServiceImpl implements QuizService {
@@ -20,14 +22,17 @@ public class QuizServiceImpl implements QuizService {
     private final QuizRepository quizRepository;
     private final QuestionService quizQuestionService;
     private final QuizCategoryService quizCategoryService;
+    private final AnswerService answerService;
 
     @Autowired
     public QuizServiceImpl(QuizRepository quizRepository,
                            QuestionService quizQuestionService,
-                           QuizCategoryService quizCategoryService) {
+                           QuizCategoryService quizCategoryService,
+                           AnswerService answerService) {
         this.quizRepository = quizRepository;
         this.quizQuestionService = quizQuestionService;
         this.quizCategoryService = quizCategoryService;
+        this.answerService = answerService;
     }
 
     @Override
@@ -70,30 +75,75 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
+    public ResponseModel<PassedQuizResponse> passQuiz(PassQuizRequest passQuizRequest) {
+
+        // Map<Long, List<Long>> correctAnswer = questionsCorrectAnswers(passQuizRequest.getQuestionsIDs());
+
+        HashMap<Long, List<Answer>> questionsIDsAndCorrectAnswers = (HashMap<Long, List<Answer>>) getCorrectAnswersByQuestionId(new ArrayList<>(passQuizRequest.getQuestionsIDsAndSelectedAnswers().keySet()));
+        HashMap<Long, List<Long>> questionIDsAndSelectedAnswers = (HashMap<Long, List<Long>>) passQuizRequest.getQuestionsIDsAndSelectedAnswers();
+
+        PassedQuizResponse passedQuizResponse = checkPassedQuiz(questionsIDsAndCorrectAnswers, questionIDsAndSelectedAnswers);
+
+
+        return new ResponseModel<>(true, "Quiz Passed Successfully", passedQuizResponse, HttpStatus.OK);
+    }
+
+    private PassedQuizResponse checkPassedQuiz(Map<Long, List<Answer>> questionsIDsAndCorrectAnswers,
+                                               Map<Long, List<Long>> questionIDsAndSelectedAnswers) {
+        PassedQuizResponse response = new PassedQuizResponse();
+        long score = 0L;
+        for (Map.Entry<Long, List<Answer>> entry : questionsIDsAndCorrectAnswers.entrySet()) {
+            List<Answer> correctAnswers = entry.getValue();
+            List<Long> selectedAnswersIDs = questionIDsAndSelectedAnswers.get(entry.getKey());
+            for (int i = 0; i < correctAnswers.size(); i++) {
+                System.out.println(correctAnswers.get(i));
+                System.out.println(selectedAnswersIDs.get(i));
+                if (correctAnswers.get(i).getId().equals(selectedAnswersIDs.get(i))) {
+                    score += correctAnswers.get(i).getScore();
+                }
+            }
+        }
+        response.setScore(score);
+        return response;
+    }
+
+    private Map<Long, List<Long>> questionsCorrectAnswers(List<Long> questionsIDs) {
+        Map<Long, List<Long>> answersIDs = new HashMap<>();
+        for (Long questionsID : questionsIDs) {
+            answersIDs.put(questionsID, answerService.getCorrectAnswersIDsByQuestionId(questionsID));
+        }
+        return answersIDs;
+    }
+
+    private Map<Long, List<Answer>> getCorrectAnswersByQuestionId(List<Long> questionIDs) {
+        Map<Long, List<Answer>> correctAnswers = new HashMap<>();
+        for (Long questionId : questionIDs) {
+            correctAnswers.put(questionId, answerService.getCorrectAnswersByQuestionId(questionId));
+            System.out.println("CORRECT _________________________");
+            System.out.println(correctAnswers.get(questionId));
+        }
+        System.out.println(correctAnswers);
+        return correctAnswers;
+    }
+
+    @Override
     public ResponseModel<List<QuizCategory>> getRootCategories() {
         List<QuizCategory> quizCategoryList = quizCategoryService.getRootCategories();
-        ResponseModel<List<QuizCategory>> responseModel = new ResponseModel<>();
-        responseModel.setSuccess(true);
-        responseModel.setData(quizCategoryList);
-        responseModel.setMessage("");
-        responseModel.setHttpStatus(HttpStatus.OK);
-        return responseModel;
+        return new ResponseModel<>(true, "", quizCategoryList, HttpStatus.OK);
     }
 
     @Override
     public ResponseModel<Quiz> getQuizById(Long id) {
         Quiz quiz = quizRepository.findQuizById(id);
-        ResponseModel<Quiz> responseModel = new ResponseModel<>();
+        ResponseModel<Quiz> responseModel;
         if (quiz == null) {
-            responseModel.setSuccess(false);
-            responseModel.setData(null);
-            responseModel.setMessage(String.format("Quiz with id : %d not found!", id));
-            responseModel.setHttpStatus(HttpStatus.NOT_FOUND);
+            responseModel = new ResponseModel.ResponseModelBuilder<Quiz>().
+                    success(false).data(null).message(String.format("Quiz with id : %d not found!", id)).
+                    httpStatus(HttpStatus.NOT_FOUND).build();
+
         } else {
-            responseModel.setSuccess(true);
-            responseModel.setData(quiz);
-            responseModel.setMessage("");
-            responseModel.setHttpStatus(HttpStatus.OK);
+            responseModel = new ResponseModel.ResponseModelBuilder<Quiz>().
+                    success(true).data(quiz).message("").httpStatus(HttpStatus.OK).build();
         }
         return responseModel;
     }

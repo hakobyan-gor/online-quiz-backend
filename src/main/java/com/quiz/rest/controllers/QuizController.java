@@ -1,5 +1,7 @@
 package com.quiz.rest.controllers;
 
+import com.quiz.models.PassQuizRequest;
+import com.quiz.models.PassedQuizResponse;
 import com.quiz.models.Quiz;
 import com.quiz.models.QuizCategory;
 import com.quiz.models.response.ResponseModel;
@@ -34,6 +36,11 @@ public class QuizController {
     @ApiOperation(value = "Adding new Quizzes")
     public ResponseModel<List<Quiz>> createQuizzes(@RequestBody List<Quiz> quizzes) {
         return quizService.createQuizzes(quizzes);
+    }
+
+    @PostMapping("/pass-quiz")
+    public ResponseModel<PassedQuizResponse> passQuiz(@RequestBody PassQuizRequest passQuizRequest){
+        return quizService.passQuiz(passQuizRequest);
     }
 
     @GetMapping("/root-categories")

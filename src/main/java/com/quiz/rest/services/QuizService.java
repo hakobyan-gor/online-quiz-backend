@@ -1,5 +1,7 @@
 package com.quiz.rest.services;
 
+import com.quiz.models.PassQuizRequest;
+import com.quiz.models.PassedQuizResponse;
 import com.quiz.models.Quiz;
 import com.quiz.models.QuizCategory;
 import com.quiz.models.response.ResponseModel;
@@ -21,4 +23,6 @@ public interface QuizService {
     ResponseModel<Quiz> updateQuiz(Quiz quiz);
 
     ResponseModel<List<Quiz>> getQuizzesByCategoryId(Long id);
+
+    ResponseModel<PassedQuizResponse> passQuiz(PassQuizRequest passQuizRequest);
 }
