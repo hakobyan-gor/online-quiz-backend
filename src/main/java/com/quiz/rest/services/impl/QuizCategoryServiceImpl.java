@@ -1,11 +1,10 @@
 package com.quiz.rest.services.impl;
 
-import com.quiz.models.QuizCategory;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.quiz.rest.repositories.QuizCategoryRepository;
 import com.quiz.rest.services.QuizCategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.quiz.models.QuizCategory;
 import java.util.List;
 
 @Service

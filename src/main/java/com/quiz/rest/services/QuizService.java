@@ -1,10 +1,10 @@
 package com.quiz.rest.services;
 
-import com.quiz.models.PassQuizRequest;
-import com.quiz.models.PassedQuizResponse;
-import com.quiz.models.Quiz;
-import com.quiz.models.QuizCategory;
+import com.quiz.models.response.PassedQuizResponse;
+import com.quiz.models.request.PassQuizRequest;
 import com.quiz.models.response.ResponseModel;
+import com.quiz.models.QuizCategory;
+import com.quiz.models.Quiz;
 
 import java.util.List;
 

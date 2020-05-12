@@ -1,11 +1,10 @@
 package com.quiz.rest.services.impl;
 
-import com.quiz.models.QuizComment;
-import com.quiz.models.response.ResponseModel;
 import com.quiz.rest.repositories.QuizCommentRepository;
 import com.quiz.rest.services.QuizCommentService;
 import org.springframework.stereotype.Service;
-
+import com.quiz.models.response.ResponseModel;
+import com.quiz.models.QuizComment;
 import java.util.List;
 
 @Service

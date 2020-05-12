@@ -1,14 +1,11 @@
 # Online Quiz Backend
 
-##
-
-## Spring Boot
-## JPA
-## REST API
-## MySQL
-## JWT Token
-## Swagger
-
-##
+* Spring Security
+* Spring Boot
+* JWT Token
+* REST API
+* Swagger
+* MySQL
+* JPA
 
 ### Registration with EMail

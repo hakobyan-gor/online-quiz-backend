@@ -1,7 +1,7 @@
 package com.quiz.rest.services;
 
-import com.quiz.models.Question;
 import com.quiz.models.response.ResponseModel;
+import com.quiz.models.Question;
 
 import java.util.List;
 

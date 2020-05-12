@@ -4,10 +4,10 @@ import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 public class JwtResponse {
 
     private String token;

@@ -1,24 +1,23 @@
 package com.quiz.rest.services;
 
-import com.quiz.models.Answer;
 import com.quiz.models.response.ResponseModel;
-
+import com.quiz.models.Answer;
 import java.util.List;
 
 public interface AnswerService {
 
-    public ResponseModel<List<Answer>> createAnswers(List<Answer> answerList);
+    ResponseModel<List<Answer>> createAnswers(List<Answer> answerList);
 
-    public ResponseModel<Answer> createAnswer(Answer answer);
+    ResponseModel<Answer> createAnswer(Answer answer);
 
     List<Long> getCorrectAnswersIDsByQuestionId(Long quizId);
 
     List<Answer> getCorrectAnswersByQuestionId(Long questionId);
 
-    public ResponseModel<Answer> getAnswerById(Long id);
+    ResponseModel<Answer> getAnswerById(Long id);
 
-    public ResponseModel<List<Answer>> getAnswersByQuestionId(Long questionId);
+    ResponseModel<List<Answer>> getAnswersByQuestionId(Long questionId);
 
-    public ResponseModel<Answer> updateAnswer(Answer answer);
+    ResponseModel<Answer> updateAnswer(Answer answer);
 
 }

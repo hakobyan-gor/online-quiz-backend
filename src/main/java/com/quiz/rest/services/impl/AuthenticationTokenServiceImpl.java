@@ -1,21 +1,25 @@
 package com.quiz.rest.services.impl;
 
-import com.quiz.models.AuthToken;
-import com.quiz.rest.repositories.AuthTokenRepository;
-import com.quiz.rest.services.AuthenticationTokenService;
-import com.quiz.security.jwt.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.quiz.rest.services.AuthenticationTokenService;
+import com.quiz.rest.repositories.AuthTokenRepository;
 import org.springframework.stereotype.Service;
+import com.quiz.security.jwt.JwtUtil;
+import com.quiz.models.AuthToken;
 
 @Service
 public class AuthenticationTokenServiceImpl implements AuthenticationTokenService {
 
-    @Autowired
-    private AuthTokenRepository authTokenRepository;
+    private final AuthTokenRepository authTokenRepository;
+
+    private final JwtUtil jwtUtil;
 
     @Autowired
-    private JwtUtil jwtUtil;
+    public AuthenticationTokenServiceImpl(AuthTokenRepository authTokenRepository, JwtUtil jwtUtil) {
+        this.authTokenRepository = authTokenRepository;
+        this.jwtUtil = jwtUtil;
+    }
 
     @Override
     public AuthToken createToken(UserDetails userDetails, Long userId) {

@@ -1,18 +1,17 @@
 package com.quiz.models;
 
-import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
+import lombok.*;
 
+@Table(name = "QUIZ_CATEGORY")
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 @Entity
-@Table(name = "QUIZ_CATEGORY")
 public class QuizCategory {
 
     @Id

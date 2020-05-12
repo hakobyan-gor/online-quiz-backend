@@ -1,16 +1,15 @@
-package com.quiz.models;
-
-import lombok.*;
+package com.quiz.models.response;
 
 import java.util.HashMap;
 import java.util.List;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 public class PassedQuizResponse {
 
     private Long id;

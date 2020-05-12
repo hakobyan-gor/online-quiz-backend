@@ -2,19 +2,18 @@ package com.quiz.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.quiz.enums.UserGender;
-import lombok.*;
-
 import javax.persistence.*;
 import java.util.Date;
+import lombok.*;
 
+@Table(name = "USER_INFO")
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 @Entity
-@Table(name = "USER_INFO")
 public class UserInfo {
 
     @Id

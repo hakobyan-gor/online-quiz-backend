@@ -1,13 +1,12 @@
 package com.quiz.rest.services.impl;
 
-import com.quiz.models.Answer;
-import com.quiz.models.response.ResponseModel;
-import com.quiz.rest.repositories.AnswerRepository;
-import com.quiz.rest.services.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import com.quiz.rest.repositories.AnswerRepository;
 import org.springframework.stereotype.Service;
-
+import com.quiz.models.response.ResponseModel;
+import com.quiz.rest.services.AnswerService;
+import org.springframework.http.HttpStatus;
+import com.quiz.models.Answer;
 import java.util.List;
 
 @Service

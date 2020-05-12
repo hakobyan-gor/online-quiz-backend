@@ -1,18 +1,17 @@
 package com.quiz.rest.controllers;
 
-import com.quiz.models.Answer;
-import com.quiz.models.response.ResponseModel;
-import com.quiz.rest.services.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import com.quiz.models.response.ResponseModel;
+import com.quiz.rest.services.AnswerService;
+import com.quiz.models.Answer;
 import java.util.List;
 
 @RestController
 @RequestMapping("/answers")
 public class AnswerController {
 
-    private AnswerService answerService;
+    private final AnswerService answerService;
 
     @Autowired
     public AnswerController(AnswerService answerService) {

@@ -1,18 +1,17 @@
 package com.quiz.models;
 
-import lombok.*;
-
 import javax.persistence.*;
 import java.util.Random;
+import lombok.*;
 
+@Table(name = "CONFIRMATION_TOKEN")
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 @Entity
-@Table(name = "CONFIRMATION_TOKEN")
 public class ConfirmationToken {
 
     @Id

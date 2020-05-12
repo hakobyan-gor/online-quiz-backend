@@ -1,7 +1,7 @@
 package com.quiz.rest.services;
 
-import com.quiz.models.request.LoginRequest;
 import com.quiz.models.request.RegistrationPasswordRequest;
+import com.quiz.models.request.LoginRequest;
 import com.quiz.models.User;
 
 public interface UserService {

@@ -1,17 +1,16 @@
 package com.quiz.models;
 
+import javax.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
-
+@Table(name = "ROLE")
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 @Entity
-@Table(name = "ROLE")
 public class Role {
 
     @Id

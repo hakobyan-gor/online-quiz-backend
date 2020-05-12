@@ -1,17 +1,16 @@
 package com.quiz.models;
 
+import javax.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
-
+@Table(name = "QUIZ_COMMENT")
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 @Entity
-@Table(name = "QUIZ_COMMENT")
 public class QuizComment {
 
     @Id

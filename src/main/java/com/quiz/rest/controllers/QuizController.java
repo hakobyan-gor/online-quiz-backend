@@ -1,16 +1,15 @@
 package com.quiz.rest.controllers;
 
-import com.quiz.models.PassQuizRequest;
-import com.quiz.models.PassedQuizResponse;
-import com.quiz.models.Quiz;
-import com.quiz.models.QuizCategory;
-import com.quiz.models.response.ResponseModel;
-import com.quiz.rest.services.QuizService;
-import io.swagger.annotations.ApiOperation;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.access.prepost.PreAuthorize;
+import com.quiz.models.response.PassedQuizResponse;
 import org.springframework.web.bind.annotation.*;
-
+import com.quiz.models.request.PassQuizRequest;
+import com.quiz.models.response.ResponseModel;
+import io.swagger.annotations.ApiOperation;
+import com.quiz.rest.services.QuizService;
+import com.quiz.models.QuizCategory;
+import com.quiz.models.Quiz;
 import java.util.List;
 
 @RestController
@@ -24,14 +23,15 @@ public class QuizController {
         this.quizService = quizService;
     }
 
-    //    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     @ApiOperation(value = "Adding new Quiz")
     public ResponseModel<Quiz> createQuiz(@RequestBody Quiz quiz) {
         return quizService.createQuiz(quiz);
     }
 
-    //    @PreAuthorize("hasAnyRole('ADMIN')")
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/add-list")
     @ApiOperation(value = "Adding new Quizzes")
     public ResponseModel<List<Quiz>> createQuizzes(@RequestBody List<Quiz> quizzes) {

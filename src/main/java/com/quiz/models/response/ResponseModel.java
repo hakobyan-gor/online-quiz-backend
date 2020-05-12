@@ -1,14 +1,14 @@
 package com.quiz.models.response;
 
-import lombok.*;
 import org.springframework.http.HttpStatus;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 public class ResponseModel<T> {
 
     private boolean success;

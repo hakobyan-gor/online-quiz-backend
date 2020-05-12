@@ -1,17 +1,18 @@
 package com.quiz.rest.services.impl;
 
-import com.quiz.models.*;
-import com.quiz.models.response.ResponseModel;
-import com.quiz.rest.repositories.QuizRepository;
-import com.quiz.rest.services.AnswerService;
-import com.quiz.rest.services.QuizCategoryService;
-import com.quiz.rest.services.QuestionService;
-import com.quiz.rest.services.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import com.quiz.models.response.PassedQuizResponse;
+import com.quiz.rest.services.QuizCategoryService;
+import com.quiz.rest.repositories.QuizRepository;
+import com.quiz.models.request.PassQuizRequest;
 import org.springframework.stereotype.Service;
-
+import com.quiz.models.response.ResponseModel;
+import com.quiz.rest.services.QuestionService;
+import com.quiz.rest.services.AnswerService;
+import org.springframework.http.HttpStatus;
+import com.quiz.rest.services.QuizService;
 import java.util.ArrayList;
+import com.quiz.models.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,8 +97,6 @@ public class QuizServiceImpl implements QuizService {
             List<Answer> correctAnswers = entry.getValue();
             List<Long> selectedAnswersIDs = questionIDsAndSelectedAnswers.get(entry.getKey());
             for (int i = 0; i < correctAnswers.size(); i++) {
-                System.out.println(correctAnswers.get(i));
-                System.out.println(selectedAnswersIDs.get(i));
                 if (correctAnswers.get(i).getId().equals(selectedAnswersIDs.get(i))) {
                     score += correctAnswers.get(i).getScore();
                 }
@@ -119,10 +118,7 @@ public class QuizServiceImpl implements QuizService {
         Map<Long, List<Answer>> correctAnswers = new HashMap<>();
         for (Long questionId : questionIDs) {
             correctAnswers.put(questionId, answerService.getCorrectAnswersByQuestionId(questionId));
-            System.out.println("CORRECT _________________________");
-            System.out.println(correctAnswers.get(questionId));
         }
-        System.out.println(correctAnswers);
         return correctAnswers;
     }
 
@@ -161,18 +157,15 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public ResponseModel<List<Quiz>> getQuizzesByCategoryId(Long id) {
-        ResponseModel<List<Quiz>> responseModel = new ResponseModel<>();
+        ResponseModel<List<Quiz>> responseModel;
         List<Quiz> quizList = quizRepository.findQuizByCategoryId(id);
         if (quizList == null) {
-            responseModel.setSuccess(false);
-            responseModel.setMessage("Quizzes with this Category not found");
-            responseModel.setData(null);
-            responseModel.setHttpStatus(HttpStatus.NOT_FOUND);
+            responseModel = new ResponseModel.ResponseModelBuilder<List<Quiz>>().
+                    success(false).message("Quizzes with this Category not found").
+                    data(null).httpStatus(HttpStatus.NOT_FOUND).build();
         } else {
-            responseModel.setSuccess(true);
-            responseModel.setMessage("");
-            responseModel.setData(quizList);
-            responseModel.setHttpStatus(HttpStatus.OK);
+            responseModel = new ResponseModel.ResponseModelBuilder<List<Quiz>>().
+                    success(true).message("").data(quizList).httpStatus(HttpStatus.OK).build();
         }
         return responseModel;
     }

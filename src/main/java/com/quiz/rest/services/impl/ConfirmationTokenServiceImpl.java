@@ -1,14 +1,14 @@
 package com.quiz.rest.services.impl;
 
-import com.quiz.models.ConfirmationToken;
 import com.quiz.rest.repositories.ConfirmationTokenRepository;
 import com.quiz.rest.services.ConfirmationTokenService;
 import org.springframework.stereotype.Service;
+import com.quiz.models.ConfirmationToken;
 
 @Service
 public class ConfirmationTokenServiceImpl implements ConfirmationTokenService {
 
-    private ConfirmationTokenRepository confirmationTokenRepository;
+    private final ConfirmationTokenRepository confirmationTokenRepository;
 
     public ConfirmationTokenServiceImpl(ConfirmationTokenRepository confirmationTokenRepository) {
         this.confirmationTokenRepository = confirmationTokenRepository;

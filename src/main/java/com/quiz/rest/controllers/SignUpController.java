@@ -1,21 +1,20 @@
 package com.quiz.rest.controllers;
 
-import com.quiz.models.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.quiz.models.request.RegistrationRequest;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 import com.quiz.models.response.JwtResponse;
 import com.quiz.rest.services.SignUpService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import com.quiz.models.*;
 import java.util.HashMap;
 
 @RestController
 @RequestMapping("/sign-up")
 public class SignUpController {
 
-    private SignUpService signUpService;
+    private final SignUpService signUpService;
 
     @Autowired
     public SignUpController(SignUpService signUpService) {

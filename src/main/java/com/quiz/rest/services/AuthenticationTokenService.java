@@ -1,7 +1,7 @@
 package com.quiz.rest.services;
 
-import com.quiz.models.AuthToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import com.quiz.models.AuthToken;
 
 public interface AuthenticationTokenService {
 

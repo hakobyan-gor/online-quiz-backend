@@ -1,18 +1,17 @@
 package com.quiz.rest.services.impl;
 
-import com.quiz.enums.Status;
-import com.quiz.models.User;
-import com.quiz.models.request.LoginRequest;
-import com.quiz.models.AuthToken;
-import com.quiz.models.response.JwtResponse;
-import com.quiz.rest.services.AuthenticationTokenService;
-import com.quiz.rest.services.SignInService;
-import com.quiz.rest.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.quiz.rest.services.AuthenticationTokenService;
 import org.springframework.stereotype.Service;
-
+import com.quiz.models.request.LoginRequest;
+import com.quiz.models.response.JwtResponse;
+import com.quiz.rest.services.SignInService;
+import com.quiz.rest.services.UserService;
+import com.quiz.models.AuthToken;
+import com.quiz.enums.Status;
+import com.quiz.models.User;
 import java.util.HashMap;
 import java.util.Map;
 

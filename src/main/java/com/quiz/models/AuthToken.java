@@ -1,17 +1,16 @@
 package com.quiz.models;
 
+import javax.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
-
+@Table(name = "AUTHENTICATION_TOKEN")
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 @Entity
-@Table(name = "AUTHENTICATION_TOKEN")
 public class AuthToken {
 
     @Id

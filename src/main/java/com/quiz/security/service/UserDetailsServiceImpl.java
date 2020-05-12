@@ -1,12 +1,12 @@
 package com.quiz.security.service;
 
-import com.quiz.models.User;
-import com.quiz.rest.repositories.UserRepository;
-import com.quiz.security.UserPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UserDetails;
+import com.quiz.rest.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+import com.quiz.security.UserPrincipal;
+import com.quiz.models.User;
 
 @Service("UserDetailsServiceImpl")
 public class UserDetailsServiceImpl implements UserDetailsService {

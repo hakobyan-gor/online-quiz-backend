@@ -2,14 +2,12 @@ package com.quiz.models.request;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 public class LoginRequest {
 
     private String username;

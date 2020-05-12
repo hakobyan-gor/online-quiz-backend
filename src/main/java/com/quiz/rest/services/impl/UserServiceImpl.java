@@ -1,14 +1,14 @@
 package com.quiz.rest.services.impl;
 
-import com.quiz.models.request.LoginRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.quiz.models.request.RegistrationPasswordRequest;
-import com.quiz.models.User;
 import com.quiz.rest.repositories.AuthTokenRepository;
 import com.quiz.rest.repositories.UserRepository;
-import com.quiz.rest.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.quiz.models.request.LoginRequest;
+import com.quiz.rest.services.UserService;
+import com.quiz.models.User;
 
 @Service
 public class UserServiceImpl implements UserService {

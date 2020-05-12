@@ -1,27 +1,26 @@
 package com.quiz.rest.services.impl;
 
-import com.quiz.enums.Status;
-import com.quiz.models.ConfirmationToken;
-import com.quiz.models.Role;
-import com.quiz.models.User;
-import com.quiz.models.request.RegistrationRequest;
-import com.quiz.models.AuthToken;
-import com.quiz.models.response.JwtResponse;
-import com.quiz.rest.repositories.RoleRepository;
-import com.quiz.rest.services.AuthenticationTokenService;
-import com.quiz.rest.services.ConfirmationTokenService;
-import com.quiz.rest.services.SignUpService;
-import com.quiz.rest.services.UserService;
-import com.quiz.security.UserPrincipal;
-import com.quiz.security.mail.EmailSenderService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import com.quiz.rest.services.AuthenticationTokenService;
+import com.quiz.rest.services.ConfirmationTokenService;
+import com.quiz.models.request.RegistrationRequest;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import com.quiz.rest.repositories.RoleRepository;
+import com.quiz.security.mail.EmailSenderService;
 import org.springframework.stereotype.Service;
-
+import com.quiz.models.response.JwtResponse;
+import com.quiz.rest.services.SignUpService;
+import com.quiz.rest.services.UserService;
+import com.quiz.models.ConfirmationToken;
+import com.quiz.security.UserPrincipal;
+import com.quiz.models.AuthToken;
+import com.quiz.enums.Status;
+import com.quiz.models.Role;
+import com.quiz.models.User;
 import java.util.List;
 
 @Service

@@ -6,13 +6,13 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@Table(name = "ANSWER")
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Getter
 @Setter
-@EqualsAndHashCode
 @Entity
-@Table(name = "ANSWER")
 public class Answer {
 
     @Id

@@ -2,19 +2,18 @@ package com.quiz.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.quiz.enums.Status;
-import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
+import lombok.*;
 
+@Table(name = "USER")
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 @Entity
-@Table(name = "USER")
 public class User {
 
     public User(User user) {

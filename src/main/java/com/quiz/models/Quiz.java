@@ -1,19 +1,18 @@
 package com.quiz.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
+import lombok.*;
 
+@Table(name = "QUIZ")
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 @Entity
-@Table(name = "QUIZ")
 public class Quiz {
 
     @Id
