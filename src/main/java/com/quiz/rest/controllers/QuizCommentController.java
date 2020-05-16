@@ -9,7 +9,7 @@ import com.quiz.models.response.ResponseModel;
 import com.quiz.models.QuizComment;
 
 @RestController
-@RequestMapping("/quiz-comment")
+@RequestMapping("/quiz-comments")
 public class QuizCommentController {
 
     private final QuizCommentService quizCommentService;

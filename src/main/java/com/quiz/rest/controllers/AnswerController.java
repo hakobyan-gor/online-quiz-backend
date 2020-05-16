@@ -1,5 +1,6 @@
 package com.quiz.rest.controllers;
 
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.quiz.models.response.ResponseModel;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/answers")
+@Api(value = "Answer Controller")
 public class AnswerController {
 
     private final AnswerService answerService;

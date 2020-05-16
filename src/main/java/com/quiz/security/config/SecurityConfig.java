@@ -13,12 +13,14 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.context.annotation.Bean;
 import com.quiz.security.filter.JwtRequestFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@CrossOrigin(origins = "localhost://3000")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationEntryPoint unauthorizedHandler;
@@ -46,7 +48,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/sign-in", "/sign-up/**").permitAll()
-                .antMatchers("/answers/**").authenticated().anyRequest().permitAll()
+                .antMatchers(
+                        "/answers/**",
+                        "/questions/**",
+                        "quizzes/**",
+                        "/quiz-comments/**").authenticated().anyRequest().permitAll()
                 .and()
 
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
