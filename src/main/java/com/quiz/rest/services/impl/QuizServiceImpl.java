@@ -2,15 +2,12 @@ package com.quiz.rest.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import com.quiz.models.response.PassedQuizResponse;
-import com.quiz.rest.services.QuizCategoryService;
 import com.quiz.rest.repositories.QuizRepository;
 import com.quiz.models.request.PassQuizRequest;
 import org.springframework.stereotype.Service;
 import com.quiz.models.response.ResponseModel;
-import com.quiz.rest.services.QuestionService;
-import com.quiz.rest.services.AnswerService;
 import org.springframework.http.HttpStatus;
-import com.quiz.rest.services.QuizService;
+import com.quiz.rest.services.*;
 import java.util.ArrayList;
 import com.quiz.models.*;
 import java.util.HashMap;
@@ -24,16 +21,19 @@ public class QuizServiceImpl implements QuizService {
     private final QuestionService quizQuestionService;
     private final QuizCategoryService quizCategoryService;
     private final AnswerService answerService;
+    private final PassedQuizService passedQuizService;
 
     @Autowired
     public QuizServiceImpl(QuizRepository quizRepository,
                            QuestionService quizQuestionService,
                            QuizCategoryService quizCategoryService,
-                           AnswerService answerService) {
+                           AnswerService answerService,
+                           PassedQuizService passedQuizService) {
         this.quizRepository = quizRepository;
         this.quizQuestionService = quizQuestionService;
         this.quizCategoryService = quizCategoryService;
         this.answerService = answerService;
+        this.passedQuizService = passedQuizService;
     }
 
     @Override
@@ -84,6 +84,14 @@ public class QuizServiceImpl implements QuizService {
         HashMap<Long, List<Long>> questionIDsAndSelectedAnswers = (HashMap<Long, List<Long>>) passQuizRequest.getQuestionsIDsAndSelectedAnswers();
 
         PassedQuizResponse passedQuizResponse = checkPassedQuiz(questionsIDsAndCorrectAnswers, questionIDsAndSelectedAnswers);
+
+        PassedQuiz passedQuiz = new PassedQuiz();
+        passedQuiz.setQuizId(passQuizRequest.getQuizId());
+        passedQuiz.setUserId(passQuizRequest.getUserId());
+        passedQuiz.setScore(passedQuizResponse.getScore());
+
+        passedQuiz = passedQuizService.addPassedQuiz(passedQuiz);
+
 
 
         return new ResponseModel<>(true, "Quiz Passed Successfully", passedQuizResponse, HttpStatus.OK);
