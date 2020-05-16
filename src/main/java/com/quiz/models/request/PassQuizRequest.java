@@ -13,6 +13,7 @@ import lombok.*;
 public class PassQuizRequest {
 
     private Map<Long, List<Long>> questionsIDsAndSelectedAnswers;
+    private Long quizId;
     private Long userId;
 
 }
