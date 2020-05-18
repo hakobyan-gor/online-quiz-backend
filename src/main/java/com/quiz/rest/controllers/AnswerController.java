@@ -8,9 +8,9 @@ import com.quiz.rest.services.AnswerService;
 import com.quiz.models.Answer;
 import java.util.List;
 
-@RestController
-@RequestMapping("/answers")
 @Api(value = "Answer Controller")
+@RequestMapping("/answers")
+@RestController
 public class AnswerController {
 
     private final AnswerService answerService;
