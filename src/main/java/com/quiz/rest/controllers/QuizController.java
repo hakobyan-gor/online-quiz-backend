@@ -39,6 +39,7 @@ public class QuizController {
     }
 
     @PostMapping("/pass-quiz")
+    @ApiOperation(value = "Passing quiz")
     public ResponseModel<PassedQuizResponse> passQuiz(@RequestBody PassQuizRequest passQuizRequest){
         return quizService.passQuiz(passQuizRequest);
     }
