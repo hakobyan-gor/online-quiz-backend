@@ -9,9 +9,9 @@ public interface PassedQuizService {
 
     PassedQuiz addPassedQuiz(PassedQuiz passedQuiz);
 
-    void getPassedQuizById(Long passedQuizId);
+    PassedQuiz getPassedQuizById(Long passedQuizId);
 
-    ResponseModel<List<PassedQuiz>> getPassedQuiz(Long userId);
+    ResponseModel<List<PassedQuiz>> getPassedQuizzesByUserId(Long userId);
 
-    void getPassedQuizzesById(Long quizId, Long userId);
+    ResponseModel<List<PassedQuiz>> getPassedQuizzesByQuizIdAndUserId(Long quizId, Long userId);
 }

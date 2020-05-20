@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/passed-quizzes")
 public class PassedQuizController {
 
-    private PassedQuizService passedQuizService;
+    private final PassedQuizService passedQuizService;
 
     @Autowired
     public PassedQuizController(PassedQuizService passedQuizService) {
@@ -23,7 +23,7 @@ public class PassedQuizController {
     }
 
     @GetMapping("/{passedQuizId}")
-    public void getPassedQuiz(@PathVariable Long passedQuizId){
+    public void getPassedQuizById(@PathVariable Long passedQuizId){
         passedQuizService.getPassedQuizById(passedQuizId);
     }
 
@@ -35,12 +35,12 @@ public class PassedQuizController {
          * with limit 1
          * in repository layer.
          */
-        return passedQuizService.getPassedQuiz(userId);
+        return passedQuizService.getPassedQuizzesByUserId(userId);
     }
 
     @GetMapping("/quiz/{quizId}/user/{userId}")
     public void getPassedQuizzesById(@PathVariable Long quizId, @PathVariable Long userId){
-        passedQuizService.getPassedQuizzesById(quizId, userId);
+        passedQuizService.getPassedQuizzesByQuizIdAndUserId(quizId, userId);
     }
 
 }
