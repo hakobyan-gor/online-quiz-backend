@@ -9,7 +9,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@ToString
 @Getter
 @Setter
 @Entity
@@ -34,4 +33,13 @@ public class Quiz {
     @JsonIgnore
     private QuizCategory theQuizCategory;
 
+    @Override
+    public String toString() {
+        return "Quiz{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", categoryId=" + categoryId +
+                ", questionList=" + questionList +
+                '}';
+    }
 }

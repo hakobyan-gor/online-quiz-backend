@@ -1,5 +1,6 @@
 package com.quiz.rest.services.impl;
 
+import com.quiz.rest.repositories.QuizCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.quiz.models.response.PassedQuizResponse;
 import com.quiz.rest.repositories.QuizRepository;
@@ -8,8 +9,11 @@ import org.springframework.stereotype.Service;
 import com.quiz.models.response.ResponseModel;
 import org.springframework.http.HttpStatus;
 import com.quiz.rest.services.*;
+
 import java.util.ArrayList;
+
 import com.quiz.models.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,23 +21,29 @@ import java.util.Map;
 @Service
 public class QuizServiceImpl implements QuizService {
 
-    private final QuizRepository quizRepository;
-    private final QuestionService quizQuestionService;
+    private final PassedQuizAnswerService passedQuizAnswerService;
+    private final QuizCategoryRepository quizCategoryRepository;
     private final QuizCategoryService quizCategoryService;
-    private final AnswerService answerService;
     private final PassedQuizService passedQuizService;
+    private final QuestionService quizQuestionService;
+    private final QuizRepository quizRepository;
+    private final AnswerService answerService;
 
     @Autowired
-    public QuizServiceImpl(QuizRepository quizRepository,
-                           QuestionService quizQuestionService,
+    public QuizServiceImpl(PassedQuizAnswerService passedQuizAnswerService,
+                           QuizCategoryRepository quizCategoryRepository,
                            QuizCategoryService quizCategoryService,
-                           AnswerService answerService,
-                           PassedQuizService passedQuizService) {
-        this.quizRepository = quizRepository;
+                           QuestionService quizQuestionService,
+                           PassedQuizService passedQuizService,
+                           QuizRepository quizRepository,
+                           AnswerService answerService) {
+        this.passedQuizAnswerService = passedQuizAnswerService;
+        this.quizCategoryRepository = quizCategoryRepository;
         this.quizQuestionService = quizQuestionService;
         this.quizCategoryService = quizCategoryService;
-        this.answerService = answerService;
         this.passedQuizService = passedQuizService;
+        this.quizRepository = quizRepository;
+        this.answerService = answerService;
     }
 
     @Override
@@ -78,28 +88,48 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public ResponseModel<PassedQuizResponse> passQuiz(PassQuizRequest passQuizRequest) {
 
-        // Map<Long, List<Long>> correctAnswer = questionsCorrectAnswers(passQuizRequest.getQuestionsIDs());
-
         HashMap<Long, List<Answer>> questionsIDsAndCorrectAnswers = (HashMap<Long, List<Answer>>) getCorrectAnswersByQuestionId(new ArrayList<>(passQuizRequest.getQuestionsIDsAndSelectedAnswers().keySet()));
         HashMap<Long, List<Long>> questionIDsAndSelectedAnswers = (HashMap<Long, List<Long>>) passQuizRequest.getQuestionsIDsAndSelectedAnswers();
 
-        PassedQuizResponse passedQuizResponse = checkPassedQuiz(questionsIDsAndCorrectAnswers, questionIDsAndSelectedAnswers);
+        long score = checkPassedQuiz(questionsIDsAndCorrectAnswers, questionIDsAndSelectedAnswers);
 
         PassedQuiz passedQuiz = new PassedQuiz();
-        passedQuiz.setQuizId(passQuizRequest.getQuizId());
         passedQuiz.setUserId(passQuizRequest.getUserId());
-        passedQuiz.setScore(passedQuizResponse.getScore());
+        passedQuiz.setQuizId(passQuizRequest.getQuizId());
+        passedQuiz.setScore(score);
 
         passedQuiz = passedQuizService.addPassedQuiz(passedQuiz);
 
+        List<PassedQuizAnswer> passedQuizAnswerList = new ArrayList<>();
+        for (Map.Entry<Long, List<Long>> entry : questionIDsAndSelectedAnswers.entrySet()) {
+            PassedQuizAnswer passedQuizAnswer = new PassedQuizAnswer();
+            passedQuizAnswer.setPassedQuizId(passedQuiz.getId());
 
+            /*
+             *
+             * must change the selected
+             *
+             * the question can have more than 1 correct answer
+             *
+             */
+            passedQuizAnswer.setAnswerId(entry.getValue().get(0));
+            passedQuizAnswerList.add(passedQuizAnswer);
+        }
 
-        return new ResponseModel<>(true, "Quiz Passed Successfully", passedQuizResponse, HttpStatus.OK);
+        passedQuizAnswerList = passedQuizAnswerService.addPassedQuizAnswers(passedQuizAnswerList);
+
+        PassedQuizResponse passedQuizResponse = new PassedQuizResponse();
+        passedQuizResponse.setPassedQuiz(passedQuiz);
+        passedQuizResponse.setPassedQuizAnswerList(passedQuizAnswerList);
+        Quiz quiz =getQuizById(passQuizRequest.getQuizId()).getData();
+        passedQuizResponse.setQuiz(quiz);
+
+        System.out.println(quiz);
+
+        return new ResponseModel.ResponseModelBuilder<PassedQuizResponse>().success(true).message("Quiz Passed Successfully").data(passedQuizResponse).httpStatus(HttpStatus.OK).build();
     }
 
-    private PassedQuizResponse checkPassedQuiz(Map<Long, List<Answer>> questionsIDsAndCorrectAnswers,
-                                               Map<Long, List<Long>> questionIDsAndSelectedAnswers) {
-        PassedQuizResponse response = new PassedQuizResponse();
+    private long checkPassedQuiz(Map<Long, List<Answer>> questionsIDsAndCorrectAnswers, Map<Long, List<Long>> questionIDsAndSelectedAnswers) {
         long score = 0L;
         for (Map.Entry<Long, List<Answer>> entry : questionsIDsAndCorrectAnswers.entrySet()) {
             List<Answer> correctAnswers = entry.getValue();
@@ -110,8 +140,8 @@ public class QuizServiceImpl implements QuizService {
                 }
             }
         }
-        response.setScore(score);
-        return response;
+
+        return score;
     }
 
     private Map<Long, List<Long>> questionsCorrectAnswers(List<Long> questionsIDs) {
@@ -139,6 +169,7 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public ResponseModel<Quiz> getQuizById(Long id) {
         Quiz quiz = quizRepository.findQuizById(id);
+        quiz.setTheQuizCategory(quizCategoryRepository.findQuizCategoryById(id));
         ResponseModel<Quiz> responseModel;
         if (quiz == null) {
             responseModel = new ResponseModel.ResponseModelBuilder<Quiz>().

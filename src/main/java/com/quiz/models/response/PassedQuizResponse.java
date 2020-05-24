@@ -1,6 +1,8 @@
 package com.quiz.models.response;
 
-import java.util.HashMap;
+import com.quiz.models.PassedQuizAnswer;
+import com.quiz.models.PassedQuiz;
+import com.quiz.models.Quiz;
 import java.util.List;
 import lombok.*;
 
@@ -12,8 +14,8 @@ import lombok.*;
 @Setter
 public class PassedQuizResponse {
 
-    private Long id;
-    private List<HashMap<Long, Long>> selectedAndCorrectAnswers;
-    private Long score;
+    private List<PassedQuizAnswer> passedQuizAnswerList;
+    private PassedQuiz passedQuiz;
+    private Quiz quiz;
 
 }
