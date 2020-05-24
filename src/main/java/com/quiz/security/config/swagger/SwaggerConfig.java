@@ -41,7 +41,6 @@ public class SwaggerConfig {
                     .securitySchemes(Lists.newArrayList(apiKey()))
                     .securityContexts(Lists.newArrayList(securityContext()))
                     .apiInfo(apiInfo(version))
-                    .pathProvider(new BasePathAwareRelativePathProvider("/api/" + version))
                     .useDefaultResponseMessages(true)
                     .enableUrlTemplating(true);
         }
@@ -80,7 +79,7 @@ public class SwaggerConfig {
             return new ApiKey("JWT", "Authorization", "Header");
         }
     }
-
+/*
     static class BasePathAwareRelativePathProvider extends AbstractPathProvider {
 
         private final String basePath;
@@ -105,57 +104,11 @@ public class SwaggerConfig {
             return Paths.removeAdjacentForwardSlashes(
                     uriComponentsBuilder.path(operationPath.replaceFirst(basePath, "")).build().toString());
         }
-    }
+    }*/
 
     @Bean
     String string(){
         return "";
     }
-
-    /*@Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.quiz.rest.controllers"))
-                .paths(PathSelectors.any())
-                .build()
-                .securitySchemes(Lists.newArrayList(apiKey()))
-                .securityContexts(Lists.newArrayList(securityContext()))
-                .apiInfo(apiInfo());
-    }
-
-    @Bean
-    public SecurityContext securityContext() {
-        return SecurityContext.builder()
-                .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.any())
-                .build();
-    }
-
-    List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope
-                = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return Lists.newArrayList(
-                new SecurityReference("JWT", authorizationScopes));
-    }
-
-    private ApiKey apiKey() {
-        return new ApiKey("JWT", "Authorization", "Header");
-    }
-
-    private ApiInfo apiInfo(String version) {
-        return new ApiInfo(
-                "Online Quiz",
-                null,
-                version,
-                null,
-                null,
-                null,
-                null,
-                Collections.emptyList()
-        );
-    }*/
 
 }
