@@ -13,4 +13,6 @@ public interface QuizCategoryRepository extends JpaRepository<QuizCategory, Long
 
     QuizCategory findQuizCategoryById(Long id);
 
+    List<QuizCategory> findQuizCategoryByRootCategoryId(Long id);
+
 }

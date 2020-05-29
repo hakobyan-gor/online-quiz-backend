@@ -2,6 +2,7 @@ package com.quiz.rest.services.impl;
 
 import com.quiz.rest.repositories.QuizCommentRepository;
 import com.quiz.rest.services.QuizCommentService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.quiz.models.response.ResponseModel;
 import com.quiz.models.QuizComment;
@@ -10,7 +11,7 @@ import java.util.List;
 @Service
 public class QuizCommentServiceImpl implements QuizCommentService {
 
-    private QuizCommentRepository quizCommentRepository;
+    private final QuizCommentRepository quizCommentRepository;
 
     public QuizCommentServiceImpl(QuizCommentRepository quizCommentRepository) {
         this.quizCommentRepository = quizCommentRepository;
@@ -18,7 +19,9 @@ public class QuizCommentServiceImpl implements QuizCommentService {
 
     @Override
     public ResponseModel<QuizComment> addComment(QuizComment quizComment) {
-        return null;
+        return new ResponseModel.ResponseModelBuilder<QuizComment>()
+                .success(true).message("").data(quizCommentRepository.save(quizComment))
+                .httpStatus(HttpStatus.OK).build();
     }
 
     @Override

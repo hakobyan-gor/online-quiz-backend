@@ -22,7 +22,7 @@ public interface QuizService {
 
     ResponseModel<Quiz> updateQuiz(Quiz quiz);
 
-    ResponseModel<List<Quiz>> getQuizzesByCategoryId(Long id);
+    ResponseModel<List<?>> getQuizzesByCategoryId(Long id);
 
     ResponseModel<PassedQuizResponse> passQuiz(PassQuizRequest passQuizRequest);
 }

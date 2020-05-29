@@ -121,7 +121,7 @@ public class QuizServiceImpl implements QuizService {
         PassedQuizResponse passedQuizResponse = new PassedQuizResponse();
         passedQuizResponse.setPassedQuiz(passedQuiz);
         passedQuizResponse.setPassedQuizAnswerList(passedQuizAnswerList);
-        Quiz quiz =getQuizById(passQuizRequest.getQuizId()).getData();
+        Quiz quiz = getQuizById(passQuizRequest.getQuizId()).getData();
         passedQuizResponse.setQuiz(quiz);
 
         System.out.println(quiz);
@@ -169,7 +169,6 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public ResponseModel<Quiz> getQuizById(Long id) {
         Quiz quiz = quizRepository.findQuizById(id);
-        quiz.setTheQuizCategory(quizCategoryRepository.findQuizCategoryById(id));
         ResponseModel<Quiz> responseModel;
         if (quiz == null) {
             responseModel = new ResponseModel.ResponseModelBuilder<Quiz>().
@@ -177,6 +176,7 @@ public class QuizServiceImpl implements QuizService {
                     httpStatus(HttpStatus.NOT_FOUND).build();
 
         } else {
+            quiz.setTheQuizCategory(quizCategoryRepository.findQuizCategoryById(id));
             responseModel = new ResponseModel.ResponseModelBuilder<Quiz>().
                     success(true).data(quiz).message("").httpStatus(HttpStatus.OK).build();
         }
@@ -195,18 +195,28 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public ResponseModel<List<Quiz>> getQuizzesByCategoryId(Long id) {
-        ResponseModel<List<Quiz>> responseModel;
-        List<Quiz> quizList = quizRepository.findQuizByCategoryId(id);
+    public ResponseModel<List<?>> getQuizzesByCategoryId(Long id) {
+        ResponseModel<List<?>> responseModel;
+        List<QuizCategory> quizCategoryList = subCategories(id);
+        if (quizCategoryList != null) {
+            responseModel = new ResponseModel.ResponseModelBuilder<List<?>>().
+                    success(true).message("").data(quizCategoryList).httpStatus(HttpStatus.OK).build();
+            return responseModel;
+        }
+        List<?> quizList = quizRepository.findQuizByCategoryId(id);
         if (quizList == null) {
-            responseModel = new ResponseModel.ResponseModelBuilder<List<Quiz>>().
+            responseModel = new ResponseModel.ResponseModelBuilder<List<?>>().
                     success(false).message("Quizzes with this Category not found").
                     data(null).httpStatus(HttpStatus.NOT_FOUND).build();
         } else {
-            responseModel = new ResponseModel.ResponseModelBuilder<List<Quiz>>().
+            responseModel = new ResponseModel.ResponseModelBuilder<List<?>>().
                     success(true).message("").data(quizList).httpStatus(HttpStatus.OK).build();
         }
         return responseModel;
+    }
+ 
+    private List<QuizCategory> subCategories(Long id) {
+        return quizCategoryRepository.findQuizCategoryByRootCategoryId(id);
     }
 
     @Override

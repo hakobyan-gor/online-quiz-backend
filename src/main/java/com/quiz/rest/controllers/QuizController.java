@@ -63,8 +63,7 @@ public class QuizController {
     }
 
     @GetMapping("/get/category/{id}")
-    public ResponseModel<List<Quiz>> getQuizzesByCategory(@PathVariable Long id){
-        System.out.println(id);
+    public ResponseModel<List<?>> getQuizzesByCategory(@PathVariable Long id){
         return quizService.getQuizzesByCategoryId(id);
     }
 
