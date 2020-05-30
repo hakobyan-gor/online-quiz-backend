@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public enum  AnswerStatus {
+public enum AnswerStatus {
 
     TRUE(0),
     FALSE(1);

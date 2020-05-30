@@ -1,14 +1,13 @@
 package com.quiz.rest.controllers;
 
-import com.quiz.models.PassedQuiz;
-import com.quiz.models.response.ResponseModel;
-import com.quiz.rest.services.PassedQuizService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
+import com.quiz.rest.services.PassedQuizService;
+import com.quiz.models.response.ResponseModel;
+import com.quiz.models.PassedQuiz;
 import java.util.List;
 
 @RestController

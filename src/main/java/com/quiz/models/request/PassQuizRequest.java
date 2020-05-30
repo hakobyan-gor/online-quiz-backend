@@ -5,8 +5,8 @@ import java.util.Map;
 import lombok.*;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
+@NoArgsConstructor
 @ToString
 @Getter
 @Setter

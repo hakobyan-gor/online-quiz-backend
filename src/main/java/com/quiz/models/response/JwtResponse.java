@@ -3,8 +3,8 @@ package com.quiz.models.response;
 import lombok.*;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
+@NoArgsConstructor
 @ToString
 @Getter
 @Setter

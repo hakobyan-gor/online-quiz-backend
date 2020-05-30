@@ -5,8 +5,8 @@ import lombok.*;
 
 @Table(name = "QUIZ_COMMENT")
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
+@NoArgsConstructor
 @ToString
 @Getter
 @Setter

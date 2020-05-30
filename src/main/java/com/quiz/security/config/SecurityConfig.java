@@ -6,7 +6,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -15,7 +14,6 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.context.annotation.Bean;
 import com.quiz.security.filter.JwtRequestFilter;
 
@@ -27,16 +25,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationEntryPoint unauthorizedHandler;
     private final JwtRequestFilter requestFilter;
-    private final UserDetailsService userDetailsService;
 
     @Autowired
     public SecurityConfig(
             @Qualifier("authEntryPoint") AuthenticationEntryPoint unauthorizedHandler,
-            JwtRequestFilter requestFilter,
-            @Qualifier(value = "UserDetailsServiceImpl") UserDetailsService userDetailsService) {
+            JwtRequestFilter requestFilter) {
         this.unauthorizedHandler = unauthorizedHandler;
         this.requestFilter = requestFilter;
-        this.userDetailsService = userDetailsService;
     }
 
     @Bean

@@ -1,7 +1,7 @@
 package com.quiz.rest.repositories;
 
-import com.quiz.models.PassedQuiz;
 import org.springframework.data.jpa.repository.JpaRepository;
+import com.quiz.models.PassedQuiz;
 
 import java.util.List;
 

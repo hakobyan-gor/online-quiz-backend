@@ -7,8 +7,8 @@ import lombok.*;
 
 @Table(name = "QUESTION")
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity

@@ -6,8 +6,8 @@ import lombok.*;
 
 @Table(name = "CONFIRMATION_TOKEN")
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
+@NoArgsConstructor
 @ToString
 @Getter
 @Setter

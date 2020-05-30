@@ -5,8 +5,8 @@ import lombok.*;
 
 @Table(name = "ROLE")
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
+@NoArgsConstructor
 @ToString
 @Getter
 @Setter

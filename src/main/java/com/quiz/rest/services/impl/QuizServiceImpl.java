@@ -1,7 +1,7 @@
 package com.quiz.rest.services.impl;
 
-import com.quiz.rest.repositories.QuizCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.quiz.rest.repositories.QuizCategoryRepository;
 import com.quiz.models.response.PassedQuizResponse;
 import com.quiz.rest.repositories.QuizRepository;
 import com.quiz.models.request.PassQuizRequest;
@@ -9,11 +9,8 @@ import org.springframework.stereotype.Service;
 import com.quiz.models.response.ResponseModel;
 import org.springframework.http.HttpStatus;
 import com.quiz.rest.services.*;
-
 import java.util.ArrayList;
-
 import com.quiz.models.*;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,8 +121,6 @@ public class QuizServiceImpl implements QuizService {
         Quiz quiz = getQuizById(passQuizRequest.getQuizId()).getData();
         passedQuizResponse.setQuiz(quiz);
 
-        System.out.println(quiz);
-
         return new ResponseModel.ResponseModelBuilder<PassedQuizResponse>().success(true).message("Quiz Passed Successfully").data(passedQuizResponse).httpStatus(HttpStatus.OK).build();
     }
 
@@ -144,13 +139,13 @@ public class QuizServiceImpl implements QuizService {
         return score;
     }
 
-    private Map<Long, List<Long>> questionsCorrectAnswers(List<Long> questionsIDs) {
+    /*private Map<Long, List<Long>> questionsCorrectAnswers(List<Long> questionsIDs) {
         Map<Long, List<Long>> answersIDs = new HashMap<>();
         for (Long questionsID : questionsIDs) {
             answersIDs.put(questionsID, answerService.getCorrectAnswersIDsByQuestionId(questionsID));
         }
         return answersIDs;
-    }
+    }*/
 
     private Map<Long, List<Answer>> getCorrectAnswersByQuestionId(List<Long> questionIDs) {
         Map<Long, List<Answer>> correctAnswers = new HashMap<>();

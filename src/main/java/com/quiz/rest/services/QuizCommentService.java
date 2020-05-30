@@ -2,7 +2,6 @@ package com.quiz.rest.services;
 
 import com.quiz.models.response.ResponseModel;
 import com.quiz.models.QuizComment;
-
 import java.util.List;
 
 public interface QuizCommentService {
