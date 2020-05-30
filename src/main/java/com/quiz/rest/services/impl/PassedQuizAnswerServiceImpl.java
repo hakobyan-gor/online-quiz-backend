@@ -1,9 +1,8 @@
 package com.quiz.rest.services.impl;
 
-import com.quiz.rest.repositories.PassedQuizAnswerRepository;
-import com.quiz.rest.repositories.PassedQuizRepository;
-import com.quiz.rest.services.PassedQuizAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.quiz.rest.repositories.PassedQuizAnswerRepository;
+import com.quiz.rest.services.PassedQuizAnswerService;
 import org.springframework.stereotype.Service;
 import com.quiz.models.PassedQuizAnswer;
 

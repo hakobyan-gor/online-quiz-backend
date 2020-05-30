@@ -1,10 +1,10 @@
 package com.quiz.rest.controllers;
 
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.quiz.models.response.ResponseModel;
 import com.quiz.rest.services.AnswerService;
+import io.swagger.annotations.Api;
 import com.quiz.models.Answer;
 import java.util.List;
 

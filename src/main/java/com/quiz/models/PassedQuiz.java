@@ -5,8 +5,8 @@ import lombok.*;
 
 @Table(name = "PASSED_QUIZ")
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
+@NoArgsConstructor
 @ToString
 @Getter
 @Setter

@@ -3,12 +3,13 @@ package com.quiz.models.response;
 import com.quiz.models.PassedQuizAnswer;
 import com.quiz.models.PassedQuiz;
 import com.quiz.models.Quiz;
+
 import java.util.List;
 import lombok.*;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
+@NoArgsConstructor
 @ToString
 @Getter
 @Setter

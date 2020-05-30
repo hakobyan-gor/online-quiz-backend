@@ -1,13 +1,10 @@
 package com.quiz.security.config.swagger;
 
 import springfox.documentation.spi.service.contexts.SecurityContext;
-import springfox.documentation.spring.web.paths.AbstractPathProvider;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.spring.web.plugins.Docket;
-import org.springframework.web.util.UriComponentsBuilder;
-import springfox.documentation.spring.web.paths.Paths;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.spi.DocumentationType;
 import org.springframework.context.annotation.Bean;

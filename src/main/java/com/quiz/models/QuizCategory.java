@@ -6,8 +6,8 @@ import lombok.*;
 
 @Table(name = "QUIZ_CATEGORY")
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
+@NoArgsConstructor
 @ToString
 @Getter
 @Setter

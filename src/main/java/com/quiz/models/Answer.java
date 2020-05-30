@@ -2,14 +2,13 @@ package com.quiz.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.quiz.enums.AnswerStatus;
-import lombok.*;
-
 import javax.persistence.*;
+import lombok.*;
 
 @Table(name = "ANSWER")
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
