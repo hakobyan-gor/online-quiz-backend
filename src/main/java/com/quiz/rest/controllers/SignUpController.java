@@ -1,5 +1,7 @@
 package com.quiz.rest.controllers;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import com.quiz.models.request.RegistrationRequest;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +24,7 @@ public class SignUpController {
 
 
     @PostMapping("/sign-up")
-    public ResponseModel<User> registration(@RequestBody RegistrationRequest registrationRequest) {
+    public ResponseModel<User> registration(@RequestBody RegistrationRequest registrationRequest) throws MessagingException {
 
         User user = signUpService.signUp(registrationRequest);
 
