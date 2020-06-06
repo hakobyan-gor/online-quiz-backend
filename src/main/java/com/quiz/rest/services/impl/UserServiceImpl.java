@@ -1,5 +1,6 @@
 package com.quiz.rest.services.impl;
 
+import com.quiz.enums.Status;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.quiz.models.request.RegistrationPasswordRequest;
@@ -74,6 +75,20 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findUserById(request.getId());
         user = userRepository.save(user);
         return user;
+    }
+
+    @Override
+    public void updateUserStatusBeforeLogOut(Long id) {
+        User user = userRepository.findUserById(id);
+        user.setStatus(Status.OFFLINE);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void updateUserStatusBeforeLogIn(Long id) {
+        User user = userRepository.findUserById(id);
+        user.setStatus(Status.ONLINE);
+        userRepository.save(user);
     }
 
 }

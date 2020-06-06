@@ -45,7 +45,6 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public ResponseModel<Quiz> createQuiz(Quiz quiz) {
-        System.out.println(quiz);
         quiz = quizRepository.save(quiz);
         ResponseModel<Quiz> responseModel = new ResponseModel<>();
         if (quiz.getQuestionList() != null) {

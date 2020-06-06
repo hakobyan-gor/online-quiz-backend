@@ -9,11 +9,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public enum Status {
 
-    PENDING(1),
-    ONLINE(2),
-    OFFLINE(3),
-    DELETED(4),
-    VERIFIED(5);
+    PENDING(0),
+    ONLINE(1),
+    OFFLINE(2),
+    DELETED(3),
+    VERIFIED(4);
 
     @Getter
     @Setter
