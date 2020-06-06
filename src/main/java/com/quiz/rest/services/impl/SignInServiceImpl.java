@@ -5,15 +5,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.quiz.rest.services.AuthenticationTokenService;
 import org.springframework.stereotype.Service;
+import com.quiz.models.response.ResponseModel;
 import com.quiz.models.request.LoginRequest;
 import com.quiz.models.response.JwtResponse;
 import com.quiz.rest.services.SignInService;
+import org.springframework.http.HttpStatus;
 import com.quiz.rest.services.UserService;
 import com.quiz.models.AuthToken;
 import com.quiz.enums.Status;
 import com.quiz.models.User;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class SignInServiceImpl implements SignInService {
@@ -29,31 +29,36 @@ public class SignInServiceImpl implements SignInService {
 
 
     @Override
-    public Map<String, Object> signIn(LoginRequest loginRequest) throws UsernameNotFoundException {
-
-        Map<String, Object> message = new HashMap<>();
+    public ResponseModel<?> signIn(LoginRequest loginRequest) throws UsernameNotFoundException {
 
         User user = userService.findUserByUsername(loginRequest.getUsername());
 
+        ResponseModel<?> responseModel = new ResponseModel.ResponseModelBuilder<>().success(false).
+                data(null).message("").httpStatus(HttpStatus.BAD_REQUEST).build();
+
         if (user == null){
-            message.put("not found", "Username Not Found");
-            return message;
+            responseModel.setMessage("Username Not Found");
+            return responseModel;
         }
 
         if (!new BCryptPasswordEncoder(8).matches(loginRequest.getPassword(), user.getPassword())){
-            message.put("error", "Password is Incorrect!");
-            return message;
+            responseModel.setMessage("Password is Incorrect!");
+            return responseModel;
         }
 
         if (user.getStatus().equals(Status.PENDING)){
-            message.put("error", "You must confirm your email, before access to our web site.");
-            return message;
+            responseModel.setMessage("You must confirm your email, before access to our web site.");
+            return responseModel;
         }
+
+        userService.updateUserStatusBeforeLogIn(user.getId());
 
         AuthToken token = authenticationTokenService.getAuthTokenByUserId(user.getId());
 
-        message.put("success", new JwtResponse(token.getToken(), "Bearer", user.getUsername()));
-        return message;
+        return new ResponseModel.ResponseModelBuilder<JwtResponse>().success(true).
+                data(new JwtResponse(token.getToken(), "Bearer", user.getUsername())).
+                message("Success").httpStatus(HttpStatus.OK).build();
+
     }
 
 }

@@ -8,10 +8,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import com.quiz.rest.services.AuthenticationTokenService;
 import com.quiz.rest.services.ConfirmationTokenService;
 import com.quiz.models.request.RegistrationRequest;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-
 import com.quiz.rest.repositories.RoleRepository;
 import com.quiz.security.mail.EmailSenderService;
 import org.springframework.stereotype.Service;
@@ -19,20 +15,16 @@ import com.quiz.models.response.JwtResponse;
 import com.quiz.rest.services.SignUpService;
 import com.quiz.rest.services.UserService;
 import com.quiz.models.ConfirmationToken;
-import com.quiz.models.Email;
 import com.quiz.security.UserPrincipal;
+import javax.mail.MessagingException;
 import com.quiz.models.AuthToken;
+import com.quiz.models.Email;
 import com.quiz.enums.Status;
 import com.quiz.models.Role;
 import com.quiz.models.User;
-
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
 @Service
 public class SignUpServiceImpl implements SignUpService {
@@ -41,7 +33,6 @@ public class SignUpServiceImpl implements SignUpService {
 	private final ConfirmationTokenService confirmationTokenService;
 	private final EmailSenderService emailSenderService;
     private final UserDetailsService userDetailsService;
-    private final JavaMailSender javaMailSender;
     private final RoleRepository roleRepository;
     private final UserService userService;
 
@@ -51,7 +42,6 @@ public class SignUpServiceImpl implements SignUpService {
     		AuthenticationTokenService authenticationTokenService,
     		ConfirmationTokenService confirmationTokenService,
     		EmailSenderService emailSenderService,
-    		JavaMailSender javaMailSender,
     		RoleRepository roleRepository,
             UserService userService
     ) {
@@ -59,7 +49,6 @@ public class SignUpServiceImpl implements SignUpService {
     	this.confirmationTokenService = confirmationTokenService;
     	this.emailSenderService = emailSenderService;
     	this.userDetailsService = userDetailsService;
-    	this.javaMailSender = javaMailSender;
     	this.roleRepository = roleRepository;
         this.userService = userService;
     }
@@ -89,7 +78,7 @@ public class SignUpServiceImpl implements SignUpService {
             
             Email email = new Email();
         	email.setEmail(registrationRequest.getEMail());
-        	email.setSubject("Email verifiction");
+        	email.setSubject("Email verification");
         	
         	Map<String, Object> props = new HashMap<>();
         	props.put("name", registrationRequest.getFirstName());
@@ -104,45 +93,19 @@ public class SignUpServiceImpl implements SignUpService {
         }
     }
 
-//    private void sendEMail(RegistrationRequest registrationRequest, int confirmationToken) throws MessagingException{
-//    	
-//    	Email email = new Email();
-//    	email.setEmail(registrationRequest.getEMail());
-//    	email.setSubject("Email verifiction");
-//    	Map<String, Object> props = new HashMap<>();
-//    	props.put("name", registrationRequest.getFirstName());
-//    	props.put("surname", registrationRequest.getLastName());
-//    	props.put("confirmationToken", confirmationToken);
-//    	email.setProps(props);
-//
-//    	emailSenderService.sendEmail(email);
-////    	
-////        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-////        simpleMailMessage.setTo(registrationRequest.getEMail());
-////        simpleMailMessage.setSubject("Complete Registration!");
-////        simpleMailMessage.setText(
-////                registrationRequest.getFirstName() + "\n" +
-////                        "Welcome to Online Quiz\n" +
-////                        "Confirm your email to continue\n" +
-////                        "Confirmation Token : " +
-////                        confirmationToken + "\n\n" +
-////                        "-Best Regards\n" +
-////                        "Online Quiz Theme");
-////
-////        emailSenderService.sendEmail(simpleMailMessage);
-//
-//    }
-
     @Override
     public JwtResponse verifyEMail(ConfirmationToken confirmationToken){
 
         JwtResponse response = null;
+        System.out.println(confirmationToken);
 
         if (confirmationTokenService.checkConfirmationToken(confirmationToken)){
             User user = userService.getUserById(confirmationToken.getUserId());
             user.setStatus(Status.VERIFIED);
             user.setUsername(user.getEMail());
             user = userService.updateUser(user);
+
+            userService.updateUserStatusBeforeLogIn(user.getId());
 
             confirmationTokenService.deleteConfirmationTokenByUserId(user.getId());
             UserDetails userDetails = new UserPrincipal(user);
