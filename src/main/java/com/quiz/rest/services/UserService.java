@@ -26,4 +26,7 @@ public interface UserService {
 
     User updateUser(RegistrationPasswordRequest request);
 
+    void updateUserStatusBeforeLogOut(Long id);
+
+    void updateUserStatusBeforeLogIn(Long id);
 }

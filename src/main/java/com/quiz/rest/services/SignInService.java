@@ -1,10 +1,11 @@
 package com.quiz.rest.services;
 
 import com.quiz.models.request.LoginRequest;
-import java.util.Map;
+import com.quiz.models.response.JwtResponse;
+import com.quiz.models.response.ResponseModel;
 
 public interface SignInService {
 
-    Map<String, Object> signIn(LoginRequest loginRequest);
+    ResponseModel<?> signIn(LoginRequest loginRequest);
 
 }
